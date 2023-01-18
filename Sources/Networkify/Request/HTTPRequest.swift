@@ -11,6 +11,8 @@ public protocol HTTPRequest {
     var headers: [String: String] { get }
         
     var method: HTTPMethod { get }
+    
+    var path: String? { get }
 
 }
 
@@ -18,13 +20,17 @@ public extension HTTPRequest {
     
     var urlRequest: URLRequest? {
         var request = URLRequest(url: url)
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        
+        if let path = path {
+            components?.path.append(path)
+        }
 
         switch method {
         case .post(let data),
              .put(let data):
             request.httpBody = data
         case let .get(queryItems):
-            var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
             components?.queryItems = queryItems
             
             guard let url = components?.url else {
@@ -50,5 +56,9 @@ public extension HTTPRequest {
     
     var method: HTTPMethod {
         return .get([])
+    }
+    
+    var path: String? {
+        return nil
     }
 }
