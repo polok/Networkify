@@ -3,4 +3,6 @@ import XCTest
 
 @testable import Networkify
 
-final class NetworkifyTests: XCTestCase {}
+final class NetworkifyTests: XCTestCase {
+    
+}
