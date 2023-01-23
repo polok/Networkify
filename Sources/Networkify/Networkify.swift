@@ -25,11 +25,11 @@ public class Networkify {
 
         let dataTask = session.dataTask(with: urlRequest) { data, urlResponse, error in
             queue.async {
-                let httpResponse = HTTPResponse(
-                        urlRequest: urlRequest,
-                        data: data,
-                        httpURLResponse: urlResponse as? HTTPURLResponse,
-                        error: error)
+                let httpResponse = HTTPResponseBuilder(urlRequest: urlRequest)
+                        .with(data: data)
+                        .with(httpURLResponse: urlResponse as? HTTPURLResponse)
+                        .with(error: error)
+                        .build()
 
                 return completion(responseHandler.handle(httpResponse))
             }
