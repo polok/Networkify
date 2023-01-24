@@ -36,16 +36,19 @@ class HTTPResponseBuilder {
         self.urlRequest = urlRequest
     }
 
+    @discardableResult
     func with(data: Data?) -> Self {
         self.data = data
         return self
     }
 
+    @discardableResult
     func with(httpURLResponse: HTTPURLResponse?) -> Self {
         self.httpURLResponse = httpURLResponse
         return self
     }
 
+    @discardableResult
     func with(error: Swift.Error?) -> Self {
         self.error = error
         return self
