@@ -43,6 +43,80 @@ final class HTTPMethodUnitTests: XCTestCase {
             expect(data).to(equal("what an awesome test".data(using: .utf32)))
         })
     }
+    
+    func testPostContainsPassedData() {
+        
+        // Given
+        let put: HTTPMethod
+        
+        // When
+        put = .post("what an awesome test".data(using: .utf32))
+        
+        // Then
+        expect(put).to(bePost() { data in
+            expect(data).to(equal("what an awesome test".data(using: .utf32)))
+        })
+    }
+    
+    func testGetHasProperHTTPMethodName() {
+        
+        // Given
+        let get: HTTPMethod
+        
+        // When
+        get = .get([])
+        
+        // Then
+        expect(get.name).to(equal("GET"))
+    }
+    
+    func testPutHasProperHTTPMethodName() {
+        
+        // Given
+        let put: HTTPMethod
+        
+        // When
+        put = .put(nil)
+        
+        // Then
+        expect(put.name).to(equal("PUT"))
+    }
+    
+    func testPostHasProperHTTPMethodName() {
+        
+        // Given
+        let post: HTTPMethod
+        
+        // When
+        post = .post(nil)
+        
+        // Then
+        expect(post.name).to(equal("POST"))
+    }
+    
+    func testHeadHasProperHTTPMethodName() {
+        
+        // Given
+        let head: HTTPMethod
+        
+        // When
+        head = .head
+        
+        // Then
+        expect(head.name).to(equal("HEAD"))
+    }
+    
+    func testDeleteHasProperHTTPMethodName() {
+        
+        // Given
+        let delete: HTTPMethod
+        
+        // When
+        delete = .delete
+        
+        // Then
+        expect(delete.name).to(equal("DELETE"))
+    }
 }
 
 private extension HTTPMethodUnitTests {
@@ -69,6 +143,21 @@ private extension HTTPMethodUnitTests {
             }
             
             if case .put(let data) = httpMethod {
+                test(data)
+                return .matches
+            }
+            
+            return .fail
+        }
+    }
+    
+    func bePost(test: @escaping (Data?) -> Void = { _ in }) -> Predicate<HTTPMethod> {
+        return Predicate.simple("be <post>") { expression in
+            guard let httpMethod = try? expression.evaluate() else {
+                return .fail
+            }
+            
+            if case .post(let data) = httpMethod {
                 test(data)
                 return .matches
             }
