@@ -7,7 +7,11 @@
 
 import Foundation
 import Networkify
+import RxSwift
 
 protocol CurrencyNetworkService {
-    func fetchAll(completionHandler: @escaping (Result<CurrenciesResponse, NetowrkifyError>) -> Void)
+    
+    func fetchAll(completionHandler: @escaping (Result<CurrenciesResponse, NetworkifyError>) -> Void)
+    
+    func fetchAll() -> Single<CurrenciesResponse>
 }

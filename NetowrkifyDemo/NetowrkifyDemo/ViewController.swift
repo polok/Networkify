@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RxSwift
 
 class ViewController: UIViewController {
+    
+    private let disposeBag = DisposeBag()
 
     private let currencyNetworkService: CurrencyNetworkService = ConcreteCurrencyNetworkService(
             baseURL: URL(string: "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-apri@1/")!
@@ -15,6 +18,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currencyNetworkService
+            .fetchAll()
+            .subscribe(
+                onSuccess: { response in
+                    debugPrint("RX-SUCCESS: \(response)")
+                }, onError: { error in
+                    debugPrint("RX-ERROR: \(error)")
+            })
+            .disposed(by: disposeBag)
 
         currencyNetworkService.fetchAll(completionHandler: { result in
             switch result {

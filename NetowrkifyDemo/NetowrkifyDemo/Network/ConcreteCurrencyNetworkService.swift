@@ -7,6 +7,8 @@
 
 import Foundation
 import Networkify
+import RxNetworkify
+import RxSwift
 
 class ConcreteCurrencyNetworkService: CurrencyNetworkService {
 
@@ -18,10 +20,16 @@ class ConcreteCurrencyNetworkService: CurrencyNetworkService {
         self.baseURL = baseURL
     }
 
-    func fetchAll(completionHandler: @escaping (Result<CurrenciesResponse, NetowrkifyError>) -> Void) {
+    func fetchAll(completionHandler: @escaping (Result<CurrenciesResponse, NetworkifyError>) -> Void) {
         _ = networkify.request(
                 CurrenciesRequest(url: baseURL, date: .custom(Date())),
                 responseHandler: DecodableNetworkifyResponseHandler<CurrenciesResponse>(),
                 completion: completionHandler)
+    }
+    
+    func fetchAll() -> RxSwift.Single<CurrenciesResponse> {
+        return networkify.rx.request(
+            CurrenciesRequest(url: baseURL, date: .custom(Date())),
+            responseHandler: DecodableNetworkifyResponseHandler<CurrenciesResponse>())
     }
 }
