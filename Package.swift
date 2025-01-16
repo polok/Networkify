@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0")),
-        .package(url: "https://github.com/Quick/Nimble.git", from: "11.2.1"),
+        .package(url: "https://github.com/Quick/Nimble.git", from: "11.2.1")
     ],
     targets: [
         .target(

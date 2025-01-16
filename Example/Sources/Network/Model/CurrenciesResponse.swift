@@ -24,7 +24,7 @@ struct CurrenciesResponse: Decodable {
 
         init?(intValue: Int) {
             // it is not being used this, thus just return nil
-            return nil
+            nil
         }
     }
 

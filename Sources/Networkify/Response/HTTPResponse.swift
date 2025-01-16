@@ -28,9 +28,9 @@ class HTTPResponseBuilder {
     // MARK: - Properties
 
     let urlRequest: URLRequest
-    var data: Data? = nil
-    var httpURLResponse: HTTPURLResponse? = nil
-    var error: Swift.Error? = nil
+    var data: Data?
+    var httpURLResponse: HTTPURLResponse?
+    var error: Swift.Error?
 
     init(urlRequest: URLRequest) {
         self.urlRequest = urlRequest
@@ -55,6 +55,6 @@ class HTTPResponseBuilder {
     }
 
     func build() -> HTTPResponse {
-        return HTTPResponse(builder: self)
+        HTTPResponse(builder: self)
     }
 }

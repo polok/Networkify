@@ -6,9 +6,9 @@ import Foundation
 
 public final class DecodableNetworkifyResponseHandler<T: Decodable>: NetworkifyResponseHandler<T> {
 
-    public override init() {}
+    override public init() {}
 
-    public override func handle(_ httpResponse: HTTPResponse) -> Result<T, NetworkifyError> {
+    override public func handle(_ httpResponse: HTTPResponse) -> Result<T, NetworkifyError> {
         guard let httpURLResponse = httpResponse.httpURLResponse, 200..<300 ~= httpURLResponse.statusCode else {
             return .failure(.network(httpResponse))
         }

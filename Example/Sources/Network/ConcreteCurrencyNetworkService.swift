@@ -22,14 +22,14 @@ class ConcreteCurrencyNetworkService: CurrencyNetworkService {
 
     func fetchAll(completionHandler: @escaping (Result<CurrenciesResponse, NetworkifyError>) -> Void) {
         _ = networkify.request(
-                CurrenciesRequest(url: baseURL, date: .custom(Date())),
+            CurrenciesRequest(url: baseURL, date: .latest),
                 responseHandler: DecodableNetworkifyResponseHandler<CurrenciesResponse>(),
                 completion: completionHandler)
     }
-    
+
     func fetchAll() -> RxSwift.Single<CurrenciesResponse> {
-        return networkify.rx.request(
-            CurrenciesRequest(url: baseURL, date: .custom(Date())),
+        networkify.rx.request(
+            CurrenciesRequest(url: baseURL, date: .latest),
             responseHandler: DecodableNetworkifyResponseHandler<CurrenciesResponse>())
     }
 }

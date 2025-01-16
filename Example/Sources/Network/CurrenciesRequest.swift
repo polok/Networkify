@@ -14,7 +14,7 @@ struct CurrenciesRequest: HTTPRequest {
     var method: HTTPMethod = .get([])
 
     var path: String? {
-        return "\(date.asString)/currencies.json"
+        "\(date.asString)/v1/currencies.json"
     }
 
     private let date: CurrencyDate

@@ -5,7 +5,7 @@
 import Foundation
 
 public enum HTTPMethod {
-    
+
     case get([URLQueryItem])
     case put(Data?)
     case post(Data?)

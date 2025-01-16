@@ -1,0 +1,151 @@
+###########
+## Project 
+###########
+name: Networkify
+
+############
+# Options
+############
+
+options:
+  minimumXcodeGenVersion: 2.42
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  deploymentTarget: 
+    iOS: "18.0"
+    tvOS: "18.0"
+
+############
+# Packages
+############
+
+packages:
+  RxSwift:
+    url: https://github.com/ReactiveX/RxSwift.git
+    exactVersion: 5.0.0
+
+  Nimble:
+    url: https://github.com/Quick/Nimble.git
+    exactVersion: 11.2.1
+
+############
+# Targets
+############
+
+targets:
+
+  # -----------
+  # Networkify
+  # -----------
+
+  Networkify:
+    type: framework
+    platform: [iOS, tvOS]
+
+    # settings
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: "io.ideaapps.netowrkify"
+
+    # scheme
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - name: NetworkifyTests_${platform}
+          parallelizable: true
+          randomExecutionOrder: true
+        
+    # sources
+    sources:
+      - path: Sources/Networkify
+        group: Sources
+
+  # -----------
+  # RxNetworkify
+  # -----------
+
+  RxNetworkify:
+    type: framework
+    platform: [iOS, tvOS]
+
+    # settings
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: "io.ideaapps.rxnetowrkify"
+
+    # scheme
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - name: RxNetworkifyTests_${platform}
+          parallelizable: true
+          randomExecutionOrder: true
+        
+    # sources
+    sources:
+      - path: Sources/RxNetworkify
+        group: Sources
+
+    # dependencies
+    dependencies:
+      - package: RxSwift
+      - target: Networkify_${platform}
+
+
+  # -----------
+  # AppExample
+  # -----------
+  AppExample:
+    type: application  
+    platform: [iOS, tvOS]
+
+    settings:
+      # Select the bundle identifier
+      PRODUCT_BUNDLE_IDENTIFIER: "io.ideaapps.networkify.example"
+    
+    # dependencies
+    dependencies:
+      - target: Networkify_${platform} 
+      - target: RxNetworkify_${platform}
+
+    # sources
+    sources:
+      - path: Example/Sources
+        group: Example
+      - path: Example/Resources
+        group: Example
+
+  # -----------
+  # NetworkifyTests
+  # -----------
+
+  NetworkifyTests:
+    type: bundle.unit-test
+    platform: [iOS, tvOS]
+
+    # sources
+    sources:
+      - path: Tests/NetworkifyTests
+        group: Tests
+
+    # dependencies
+    dependencies:
+      - target: Networkify_${platform}
+      - package: Nimble
+
+  # -----------
+  # RxNetworkifyTests
+  # -----------
+
+  RxNetworkifyTests:
+    type: bundle.unit-test
+    platform: [iOS, tvOS]
+
+    # sources
+    sources:
+      - path: Tests/RxNetworkifyTests
+        group: Tests
+
+    # dependencies
+    dependencies:
+      - target: RxNetworkify_${platform}
+      - package: RxSwift     
+      - package: Nimble
