@@ -6,15 +6,15 @@ import Foundation
 import Networkify
 import RxSwift
 
-extension Networkify: ReactiveCompatible {}
+extension Networkify: @retroactive ReactiveCompatible {}
 
 public extension Reactive where Base: Networkify {
 
     func request<T>(
         _ request: HTTPRequest,
-        responseHandler: NetworkifyResponseHandler<T>,
-        queue: DispatchQueue = .main) -> Single<T> {
-            Single.create { single in
+        responseHandler: NetworkifyResultResponseHandler<T>,
+        queue: DispatchQueue = .main) -> Observable<T> {
+            Observable.create { observer in
                 let task = self.base.request(
                     request,
                     responseHandler: responseHandler,
@@ -22,9 +22,10 @@ public extension Reactive where Base: Networkify {
 
                     switch result {
                     case let .success(response):
-                        single(.success(response))
+                        observer.on(.next(response))
+                        observer.on(.completed)
                     case let .failure(error):
-                        single(.error(error))
+                        observer.on(.error(error))
                     }
                 }
 

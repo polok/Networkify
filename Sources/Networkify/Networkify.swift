@@ -11,10 +11,10 @@ public class Networkify {
     public init(configuration: URLSessionConfiguration = .default) {
         self.configuration = configuration
     }
-
+    
     public func request<T>(
             _ request: HTTPRequest,
-            responseHandler: NetworkifyResponseHandler<T>,
+            responseHandler: NetworkifyResultResponseHandler<T>,
             queue: DispatchQueue = .main,
             completion: @escaping (Result<T, NetworkifyError>) -> Void) -> URLSessionDataTask? {
 

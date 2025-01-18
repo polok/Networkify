@@ -9,4 +9,5 @@ public enum NetworkifyError: Swift.Error {
     case noData(HTTPResponse)
     case decoding(Swift.Error, HTTPResponse)
     case network(HTTPResponse)
+    case unknown(Swift.Error)
 }

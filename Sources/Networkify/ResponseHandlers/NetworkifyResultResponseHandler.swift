@@ -4,16 +4,9 @@
 
 import Foundation
 
-open class NetworkifyResponseHandler<T> {
-    
-    func handle(_ httpResponse: HTTPResponse) throws -> T {
-        fatalError("It has to be overriden")
-    }
-}
-
 open class NetworkifyResultResponseHandler<T> {
     
-    func handle(_ httpResponse: HTTPResponse) throws -> Result<T, NetworkifyError> {
+    func handle(_ httpResponse: HTTPResponse) -> Result<T, NetworkifyError> {
         fatalError("It has to be overriden")
     }
 }

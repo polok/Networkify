@@ -4,24 +4,23 @@
 
 import Foundation
 
-public final class DecodableNetworkifyResponseHandler<T: Decodable>: NetworkifyResponseHandler<T> {
+public class DecodableNetworkifyResponseHandler<T: Decodable>: NetworkifyResponseHandler<T> {
 
     override public init() {}
-
-    override public func handle(_ httpResponse: HTTPResponse) -> Result<T, NetworkifyError> {
+    
+    override public func handle(_ httpResponse: HTTPResponse) throws(NetworkifyError) -> T {
         guard let httpURLResponse = httpResponse.httpURLResponse, 200..<300 ~= httpURLResponse.statusCode else {
-            return .failure(.network(httpResponse))
+            throw NetworkifyError.network(httpResponse)
         }
 
         guard let data = httpResponse.data else {
-            return .failure(.noData(httpResponse))
+            throw NetworkifyError.noData(httpResponse)
         }
 
         do {
-            let object = try JSONDecoder().decode(T.self, from: data)
-            return .success(object)
+            return try JSONDecoder().decode(T.self, from: data)
         } catch {
-            return .failure(.decoding(error, httpResponse))
+            throw NetworkifyError.decoding(error, httpResponse)
         }
     }
 }

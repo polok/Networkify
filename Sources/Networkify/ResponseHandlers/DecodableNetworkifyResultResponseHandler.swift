@@ -4,7 +4,7 @@
 
 import Foundation
 
-public class DecodableResultNetworkifyResponseHandler<T: Decodable>: NetworkifyResultResponseHandler<T> {
+public class DecodableNetworkifyResultResponseHandler<T: Decodable>: NetworkifyResultResponseHandler<T> {
 
     override public init() {}
     

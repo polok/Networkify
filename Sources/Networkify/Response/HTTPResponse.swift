@@ -4,7 +4,7 @@
 
 import Foundation
 
-public class HTTPResponse {
+public struct HTTPResponse {
 
     // MARK: - Properties
 
