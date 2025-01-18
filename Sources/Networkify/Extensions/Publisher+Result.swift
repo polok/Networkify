@@ -5,7 +5,7 @@
 import Combine
 
 public extension Publisher {
-    
+
     func asResult() -> AnyPublisher<Result<Output, NetworkifyError>, Never> {
         self
             .map(Result.success)
@@ -13,7 +13,7 @@ public extension Publisher {
                 if let error = error as? NetworkifyError {
                     return Just(Result<Output, NetworkifyError>.failure(error))
                 }
-                
+
                 return Just(Result<Output, NetworkifyError>.failure(NetworkifyError.unknown(error)))
             }
             .eraseToAnyPublisher()

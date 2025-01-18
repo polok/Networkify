@@ -11,7 +11,7 @@ public class Networkify {
     public init(configuration: URLSessionConfiguration = .default) {
         self.configuration = configuration
     }
-    
+
     public func request<T>(
             _ request: HTTPRequest,
             responseHandler: NetworkifyResultResponseHandler<T>,
