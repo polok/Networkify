@@ -30,6 +30,9 @@ public extension HTTPRequest {
         case .post(let data),
              .put(let data):
             request.httpBody = data
+        case .postDataForm(let formData):
+            let body = formData.percentEncoded()
+            request.httpBody = body
         case let .get(queryItems):
             components?.queryItems = queryItems
 
