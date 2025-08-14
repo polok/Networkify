@@ -5,13 +5,12 @@
 import Foundation
 
 public class DecodableNetworkifyResultResponseHandler<T: Decodable>: NetworkifyResultResponseHandler<T> {
-
     override public init() {}
 
     override public func handle(_ httpResponse: HTTPResponse) -> Result<T, NetworkifyError> {
         do {
             let handler = DecodableNetworkifyResponseHandler<T>()
-            return .success(try handler.handle(httpResponse))
+            return try .success(handler.handle(httpResponse))
         } catch {
             return .failure(error)
         }

@@ -9,7 +9,6 @@ import Foundation
 import Networkify
 
 struct CurrenciesRequest: HTTPRequest {
-
     var url: URL
     var method: HTTPMethod = .get([])
 

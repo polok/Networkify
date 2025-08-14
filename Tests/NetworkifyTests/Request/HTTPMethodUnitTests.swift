@@ -8,16 +8,14 @@ import XCTest
 @testable import Networkify
 
 final class HTTPMethodUnitTests: XCTestCase {
-
     func testGetContainsPassedURLQueryItems() {
-
         // Given
         let get: HTTPMethod
 
         // When
         get = .get([
-                    URLQueryItem(name: "key_1", value: "value_1"),
-                    URLQueryItem(name: "key_2", value: "value_2")
+            URLQueryItem(name: "key_1", value: "value_1"),
+            URLQueryItem(name: "key_2", value: "value_2"),
         ])
 
         // Then
@@ -31,7 +29,6 @@ final class HTTPMethodUnitTests: XCTestCase {
     }
 
     func testPutContainsPassedData() {
-
         // Given
         let put: HTTPMethod
 
@@ -45,7 +42,6 @@ final class HTTPMethodUnitTests: XCTestCase {
     }
 
     func testPostContainsPassedData() {
-
         // Given
         let put: HTTPMethod
 
@@ -59,7 +55,6 @@ final class HTTPMethodUnitTests: XCTestCase {
     }
 
     func testGetHasProperHTTPMethodName() {
-
         // Given
         let get: HTTPMethod
 
@@ -71,7 +66,6 @@ final class HTTPMethodUnitTests: XCTestCase {
     }
 
     func testPutHasProperHTTPMethodName() {
-
         // Given
         let put: HTTPMethod
 
@@ -83,7 +77,6 @@ final class HTTPMethodUnitTests: XCTestCase {
     }
 
     func testPostHasProperHTTPMethodName() {
-
         // Given
         let post: HTTPMethod
 
@@ -95,7 +88,6 @@ final class HTTPMethodUnitTests: XCTestCase {
     }
 
     func testHeadHasProperHTTPMethodName() {
-
         // Given
         let head: HTTPMethod
 
@@ -107,7 +99,6 @@ final class HTTPMethodUnitTests: XCTestCase {
     }
 
     func testDeleteHasProperHTTPMethodName() {
-
         // Given
         let delete: HTTPMethod
 
@@ -120,14 +111,13 @@ final class HTTPMethodUnitTests: XCTestCase {
 }
 
 private extension HTTPMethodUnitTests {
-
     func beGet(test: @escaping ([URLQueryItem]) -> Void = { _ in }) -> Nimble.Predicate<HTTPMethod> {
         Predicate.define("be <get>") { expression, message in
             guard let httpMethod = try? expression.evaluate() else {
                 return PredicateResult(status: .fail, message: message)
             }
 
-            if case .get(let urlQueryItems) = httpMethod {
+            if case let .get(urlQueryItems) = httpMethod {
                 test(urlQueryItems)
                 return PredicateResult(status: .matches, message: message)
             }
@@ -142,7 +132,7 @@ private extension HTTPMethodUnitTests {
                 return .fail
             }
 
-            if case .put(let data) = httpMethod {
+            if case let .put(data) = httpMethod {
                 test(data)
                 return .matches
             }
@@ -157,7 +147,7 @@ private extension HTTPMethodUnitTests {
                 return .fail
             }
 
-            if case .post(let data) = httpMethod {
+            if case let .post(data) = httpMethod {
                 test(data)
                 return .matches
             }

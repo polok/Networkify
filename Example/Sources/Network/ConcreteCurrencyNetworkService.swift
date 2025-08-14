@@ -5,14 +5,13 @@
 //  Created by Marcin Polak on 09/01/2023.
 //
 
+import Combine
 import Foundation
 import Networkify
 import RxNetworkify
 import RxSwift
-import Combine
 
 class ConcreteCurrencyNetworkService: CurrencyNetworkService {
-
     private let networkify: Networkify
     private let baseURL: URL
 
@@ -25,25 +24,29 @@ class ConcreteCurrencyNetworkService: CurrencyNetworkService {
         _ = networkify.request(
             CurrenciesRequest(url: baseURL, date: .latest),
             responseHandler: DecodableNetworkifyResultResponseHandler<CurrenciesResponse>(),
-            completion: completionHandler)
+            completion: completionHandler
+        )
     }
 
     func fetchAll() -> Single<CurrenciesResponse> {
         networkify.rx.request(
             CurrenciesRequest(url: baseURL, date: .latest),
-            responseHandler: DecodableNetworkifyResultResponseHandler<CurrenciesResponse>())
-            .asSingle()
+            responseHandler: DecodableNetworkifyResultResponseHandler<CurrenciesResponse>()
+        )
+        .asSingle()
     }
 
     func fetchAll() -> AnyPublisher<Result<CurrenciesResponse, NetworkifyError>, Never> {
         networkify.request(
             CurrenciesRequest(url: baseURL, date: .latest),
-            responseHandler: DecodableNetworkifyResponseHandler<CurrenciesResponse>())
+            responseHandler: DecodableNetworkifyResponseHandler<CurrenciesResponse>()
+        )
     }
 
     func fetchAll() async throws -> Result<CurrenciesResponse, NetworkifyError> {
         try await networkify.request(
             CurrenciesRequest(url: baseURL, date: .latest),
-            responseHandler: DecodableNetworkifyResultResponseHandler<CurrenciesResponse>())
+            responseHandler: DecodableNetworkifyResultResponseHandler<CurrenciesResponse>()
+        )
     }
 }

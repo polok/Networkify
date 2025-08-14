@@ -8,11 +8,9 @@
 import Foundation
 
 struct CurrenciesResponse: Decodable {
-
     let currencies: [String: String]
 
     private struct DynamicCodingKey: CodingKey {
-
         // Use for currency code
         var stringValue: String
 
@@ -22,14 +20,13 @@ struct CurrenciesResponse: Decodable {
 
         var intValue: Int?
 
-        init?(intValue: Int) {
+        init?(intValue _: Int) {
             // it is not being used this, thus just return nil
             nil
         }
     }
 
     init(from decoder: Decoder) throws {
-
         // 1
         // Create a decoding container using DynamicCodingKeys
         // It will contain all currency codes
