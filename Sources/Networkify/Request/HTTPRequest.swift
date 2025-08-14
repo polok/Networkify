@@ -5,7 +5,6 @@
 import Foundation
 
 public protocol HTTPRequest {
-
     var url: URL { get }
 
     var headers: [String: String] { get }
@@ -13,11 +12,9 @@ public protocol HTTPRequest {
     var method: HTTPMethod { get }
 
     var path: String? { get }
-
 }
 
 public extension HTTPRequest {
-
     var urlRequest: URLRequest? {
         var request = URLRequest(url: url)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
@@ -27,22 +24,19 @@ public extension HTTPRequest {
         }
 
         switch method {
-        case .post(let data),
-             .put(let data):
+        case let .post(data),
+             let .put(data):
+            request = URLRequest(url: components?.url ?? url)
             request.httpBody = data
-        case .postDataForm(let formData):
+        case let .postDataForm(formData):
             let body = formData.percentEncoded()
+            request = URLRequest(url: components?.url ?? url)
             request.httpBody = body
         case let .get(queryItems):
             components?.queryItems = queryItems
-
-            guard let url = components?.url else {
-                return nil
-            }
-
-            request = URLRequest(url: url)
+            request = URLRequest(url: components?.url ?? url)
         default:
-            break
+            request = URLRequest(url: components?.url ?? url)
         }
 
         request.allHTTPHeaderFields = headers
@@ -52,7 +46,6 @@ public extension HTTPRequest {
 }
 
 public extension HTTPRequest {
-
     var headers: [String: String] {
         [:]
     }

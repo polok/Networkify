@@ -9,25 +9,30 @@ let package = Package(
     products: [
         .library(
             name: "Networkify",
-            targets: ["Networkify"]),
+            targets: ["Networkify"]
+        ),
         .library(
             name: "RxNetworkify",
-            targets: ["RxNetworkify"])
+            targets: ["RxNetworkify"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0")),
-        .package(url: "https://github.com/Quick/Nimble.git", from: "11.2.1")
+        .package(url: "https://github.com/Quick/Nimble.git", from: "11.2.1"),
     ],
     targets: [
         .target(
             name: "Networkify",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "NetworkifyTests",
-            dependencies: ["Networkify", "Nimble"]),
+            dependencies: ["Networkify", "Nimble"]
+        ),
         .target(
             name: "RxNetworkify",
             dependencies: ["Networkify", "RxSwift"],
-            path: "Sources/RxNetworkify")
+            path: "Sources/RxNetworkify"
+        ),
     ]
 )

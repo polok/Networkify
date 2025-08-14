@@ -5,7 +5,6 @@
 import Foundation
 
 public struct HTTPResponse {
-
     // MARK: - Properties
 
     public let urlRequest: URLRequest
@@ -16,15 +15,14 @@ public struct HTTPResponse {
     // MARK: - Initializers
 
     init(builder: HTTPResponseBuilder) {
-        self.urlRequest = builder.urlRequest
-        self.data = builder.data
-        self.httpURLResponse = builder.httpURLResponse
-        self.error = builder.error
+        urlRequest = builder.urlRequest
+        data = builder.data
+        httpURLResponse = builder.httpURLResponse
+        error = builder.error
     }
 }
 
 class HTTPResponseBuilder {
-
     // MARK: - Properties
 
     let urlRequest: URLRequest

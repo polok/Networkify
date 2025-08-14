@@ -5,10 +5,8 @@
 import Combine
 
 public extension Publisher {
-
     func asResult() -> AnyPublisher<Result<Output, NetworkifyError>, Never> {
-        self
-            .map(Result.success)
+        map(Result.success)
             .catch { error in
                 if let error = error as? NetworkifyError {
                     return Just(Result<Output, NetworkifyError>.failure(error))

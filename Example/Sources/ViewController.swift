@@ -5,22 +5,21 @@
 //  Created by Marcin Polak on 07/01/2023.
 //
 
-import UIKit
-import RxSwift
 import Combine
+import RxSwift
+import UIKit
 
 class ViewController: UIViewController {
-
     private let disposeBag = DisposeBag()
     private var anyCancellable: AnyCancellable?
 
     private let currencyNetworkService: CurrencyNetworkService = ConcreteCurrencyNetworkService(
-            baseURL: URL(string: "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@")!
+        baseURL: URL(string: "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@")!
     )
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        
+//
 //        Task { @MainActor in
 //            switch (try await currencyNetworkService.fetchAll()) {
 //            case .success(let response):
@@ -47,7 +46,8 @@ class ViewController: UIViewController {
                     debugPrint("RX-SUCCESS: \(response)")
                 }, onError: { error in
                     debugPrint("RX-ERROR: \(error)")
-                })
+                }
+            )
             .disposed(by: disposeBag)
 
 //        currencyNetworkService.fetchAll { result in
