@@ -11,7 +11,6 @@ import XCTest
 @testable import Networkify
 
 final class HTTPRequestUnitTests: XCTestCase {
-    
     func testUrlRequestHasValidPathForPostDataFormMethod() {
         // Given
         let signInRequest = SignInHTTPRequest()
