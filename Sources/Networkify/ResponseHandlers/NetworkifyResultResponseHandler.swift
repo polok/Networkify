@@ -4,7 +4,7 @@
 
 import Foundation
 
-open class NetworkifyResultResponseHandler<T>: @unchecked Sendable {
+open class NetworkifyResultResponseHandler<T> {
     public init() {}
 
     open func handle(_: HTTPResponse) -> Result<T, NetworkifyError> {
