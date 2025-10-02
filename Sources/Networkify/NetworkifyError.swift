@@ -6,6 +6,7 @@ import Foundation
 
 public enum NetworkifyError: Swift.Error {
     case invalidURLRequest(HTTPRequest)
+    case missingBody(HTTPRequest)
     case noData(HTTPResponse)
     case decoding(Swift.Error, HTTPResponse)
     case network(HTTPResponse)

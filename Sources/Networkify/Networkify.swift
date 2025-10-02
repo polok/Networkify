@@ -1,6 +1,6 @@
 import Foundation
 
-public class Networkify {
+public class Networkify: NSObject {
     lazy var session: URLSession = .init(configuration: self.configuration)
 
     private let configuration: URLSessionConfiguration
@@ -34,5 +34,37 @@ public class Networkify {
 
         dataTask.resume()
         return dataTask
+    }
+
+    public func upload<T>(
+        _ request: HTTPRequest,
+        responseHandler: NetworkifyResultResponseHandler<T>,
+        queue: DispatchQueue = .main,
+        completion: @escaping (Result<T, NetworkifyError>) -> Void
+    ) -> URLSessionDataTask? {
+        guard let urlRequest = request.urlRequest else {
+            completion(.failure(.invalidURLRequest(request)))
+            return nil
+        }
+
+        guard let httpBody = urlRequest.httpBody else {
+            completion(.failure(.missingBody(request)))
+            return nil
+        }
+
+        let uploadTask = session.uploadTask(with: urlRequest, from: httpBody) { data, urlResponse, error in
+            queue.async {
+                let httpResponse = HTTPResponseBuilder(urlRequest: urlRequest)
+                    .with(data: data)
+                    .with(httpURLResponse: urlResponse as? HTTPURLResponse)
+                    .with(error: error)
+                    .build()
+
+                return completion(responseHandler.handle(httpResponse))
+            }
+        }
+
+        uploadTask.resume()
+        return uploadTask
     }
 }

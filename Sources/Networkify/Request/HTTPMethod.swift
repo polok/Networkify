@@ -9,6 +9,7 @@ public enum HTTPMethod {
     case put(Data?)
     case post(Data?)
     case postDataForm([String: Any])
+    case multipart(Data)
     case delete
     case head
 
@@ -16,7 +17,7 @@ public enum HTTPMethod {
         switch self {
         case .get: return "GET"
         case .put: return "PUT"
-        case .post, .postDataForm: return "POST"
+        case .post, .postDataForm, .multipart: return "POST"
         case .delete: return "DELETE"
         case .head: return "HEAD"
         }

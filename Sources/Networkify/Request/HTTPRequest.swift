@@ -35,6 +35,9 @@ public extension HTTPRequest {
         case let .get(queryItems):
             components?.queryItems = queryItems
             request = URLRequest(url: components?.url ?? url)
+        case let .multipart(data):
+            request = URLRequest(url: components?.url ?? url)
+            request.httpBody = data
         default:
             request = URLRequest(url: components?.url ?? url)
         }
