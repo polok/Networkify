@@ -34,7 +34,7 @@ public extension Networkify {
             throw NetworkifyError.missingBody(request)
         }
 
-        let (data, response) = try await session.data(for: urlRequest)
+        let (data, response) = try await session.upload(for: urlRequest, from: httpBody)
 
         let httpResponse = HTTPResponseBuilder(urlRequest: urlRequest)
             .with(data: data)
