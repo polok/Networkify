@@ -26,13 +26,15 @@ public extension Networkify {
         _ request: HTTPRequest,
         responseHandler: NetworkifyResultResponseHandler<T>
     ) async throws -> Result<T, NetworkifyError> {
-        guard let urlRequest = request.urlRequest else {
+        guard var urlRequest = request.urlRequest else {
             throw NetworkifyError.invalidURLRequest(request)
         }
 
         guard let httpBody = urlRequest.httpBody else {
             throw NetworkifyError.missingBody(request)
         }
+        
+        urlRequest.httpBody = nil
 
         let (data, response) = try await session.upload(for: urlRequest, from: httpBody)
 
